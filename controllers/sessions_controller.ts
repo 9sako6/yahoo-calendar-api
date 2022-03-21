@@ -1,10 +1,11 @@
 import { Context, Status } from "../deps.ts";
 import {
+  accessCalendar,
   closeBrowserAndPage,
-  sendConfirmationCode,
+  openBrowserAndPage,
   submitConfirmationCode,
+  submitUserId,
 } from "../scraping/mod.ts";
-import puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
 
 export const sessionsController = {
   new: async (ctx: Context) => {
@@ -45,19 +46,14 @@ export const sessionsController = {
     };
 
     const socket = ctx.upgrade();
-    const browser = await puppeteer.launch({
-      args: [
-        "--no-sandbox",
-        "--disable-dev-shm-usage",
-      ],
-    });
-    const page = await browser.newPage();
+    const { browser, page } = await openBrowserAndPage();
 
     socket.onopen = handleOpen;
     socket.onerror = (event) => handleError(event);
     socket.onmessage = (event: MessageEvent<string>) => handleMessage(event);
     socket.onclose = handleClose;
 
-    await sendConfirmationCode(page, userId);
+    await accessCalendar(page);
+    await submitUserId(page, userId);
   },
 };

@@ -19,6 +19,7 @@ Deno.test("close browser and page", async () => {
   assert(!browser.isConnected());
   assert(page.isClosed());
 
+  // Call twice and the condition remained the same.
   await closeBrowserAndPage(browser, page);
 
   assert(!browser.isConnected());

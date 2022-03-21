@@ -1,14 +1,9 @@
-import * as puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
+import { Page } from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
 
-export const sendConfirmationCode = async (
-  page: puppeteer.Page,
+export const submitUserId = async (
+  page: Page,
   userId: string,
 ) => {
-  await page.goto("https://calendar.yahoo.co.jp");
-  await page.screenshot({
-    path: "./screenshots/after-access-calendar-page.png",
-  });
-
   // Input a user ID or telephone number or email address.
   console.log("Input a user ID or telephone number or email address.");
   await page.type('input[placeholder="ID/携帯電話番号/メールアドレス"]', userId);

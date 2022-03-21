@@ -1,7 +1,7 @@
-import * as puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
+import { Page } from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
 
 export const submitConfirmationCode = async (
-  page: puppeteer.Page,
+  page: Page,
   code: string,
 ) => {
   // Input a verification code.
