@@ -8,7 +8,9 @@ export const submitUserId = async (
   console.log("Input a user ID or telephone number or email address.");
   await page.type('input[placeholder="ID/携帯電話番号/メールアドレス"]', userId);
 
-  await page.screenshot({ path: "./screenshots/after-input-userid.png" });
+  if (Deno.env.get("SCREENSHOT")) {
+    await page.screenshot({ path: "./screenshots/after-input-userid.png" });
+  }
 
   // Click the "次へ" button and wait for rendering.
   const [submitUserIdButton] = await page.$x('//button[contains(., "次へ")]');
@@ -17,9 +19,11 @@ export const submitUserId = async (
     submitUserIdButton.click(),
   ]);
 
-  await page.screenshot({
-    path: "./screenshots/after-click-userid-submit-button.png",
-  });
+  if (Deno.env.get("SCREENSHOT")) {
+    await page.screenshot({
+      path: "./screenshots/after-click-userid-submit-button.png",
+    });
+  }
   const cookies = await page.cookies();
   return cookies;
 };

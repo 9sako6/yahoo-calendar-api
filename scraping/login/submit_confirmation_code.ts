@@ -8,9 +8,11 @@ export const submitConfirmationCode = async (
   console.log("Input a verification code.");
   await page.type('input[placeholder="確認コード"]', code);
 
-  await page.screenshot({
-    path: "./screenshots/after-inpupt-code.png",
-  });
+  if (Deno.env.get("SCREENSHOT")) {
+    await page.screenshot({
+      path: "./screenshots/after-inpupt-code.png",
+    });
+  }
 
   // Click the "ログイン" button and wait for rendering.
   const [loginButton] = await page.$x('//button[contains(., "ログイン")]');
@@ -28,9 +30,11 @@ export const submitConfirmationCode = async (
     ]);
   }
 
-  await page.screenshot({
-    path: "./screenshots/after-login.png",
-  });
+  if (Deno.env.get("SCREENSHOT")) {
+    await page.screenshot({
+      path: "./screenshots/after-login.png",
+    });
+  }
 
   return await page.cookies();
 };
