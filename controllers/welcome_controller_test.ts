@@ -1,18 +1,15 @@
-import { Application, Router } from "../deps.ts";
+import { Router } from "../deps.ts";
 import { assertEquals } from "../test_deps.ts";
 import { welcomeController } from "./welcome_controller.ts";
+import { closeServer, setupServer } from "./test_helper.ts";
 
 Deno.test("index action", async () => {
-  const app = new Application();
-  const router = new Router();
-  const abortController = new AbortController();
-  const { signal } = abortController;
   const port = 8081;
-
+  const abortController = new AbortController();
+  const router = new Router();
   router.get("/", welcomeController.index);
-  app.use(router.routes());
 
-  app.listen({ port, signal });
+  setupServer(port, abortController, router);
 
   const response = await fetch(`http://localhost:${port}/`);
   const jsonResponse = await response.json();
@@ -20,5 +17,5 @@ Deno.test("index action", async () => {
   assertEquals(response.status, 200);
   assertEquals(jsonResponse, { message: "Welcome to Yahoo! Calendar API" });
 
-  abortController.abort();
+  closeServer(abortController);
 });
