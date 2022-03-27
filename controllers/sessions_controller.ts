@@ -1,4 +1,4 @@
-import { Context, Status } from "../deps.ts";
+import { Context } from "../deps.ts";
 import {
   accessCalendar,
   closeBrowserAndPage,
@@ -6,19 +6,12 @@ import {
   submitConfirmationCode,
   submitUserId,
 } from "../scraping/mod.ts";
+import { Browser, Page } from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
 
 export const sessionsController = {
   new: async (ctx: Context) => {
-    const userId = ctx.request.url.searchParams.get("userid");
-
-    if (!userId) {
-      ctx.response.body = { message: "userid property is missing." };
-      ctx.response.status = Status.BadRequest;
-      return;
-    }
-
     const handleOpen = () => {
-      console.log("Connection is established.");
+      socket.send("Info: Connection is established.");
     };
 
     const handleError = async (event: Event | ErrorEvent) => {
@@ -32,28 +25,55 @@ export const sessionsController = {
     const handleMessage = async (
       event: MessageEvent<string>,
     ) => {
-      const code = event.data;
-      const cookies = await submitConfirmationCode(page, code);
+      // NOTE: `event.data` is expected the following two patterns.
+      // {"action": "userid", "message": "<your_user_id>"}
+      // {"action": "code", "message": "<confirmation_code>"}
+      try {
+        JSON.parse(event.data);
+      } catch (e) {
+        socket.send(`Error: ${e.message}`);
+        return;
+      }
 
-      await Deno.writeTextFile("./cookies.json", JSON.stringify(cookies));
-      await closeBrowserAndPage(browser, page);
-      socket.send(JSON.stringify(cookies));
+      const { action, message } = JSON.parse(event.data);
+
+      if (!message) {
+        socket.send("Error: An empty message is invalid.");
+        return;
+      }
+
+      if (action === "userid") {
+        await accessCalendar(page);
+        const success = await submitUserId(page, message);
+
+        if (success) {
+          socket.send("Info: A confirmation code was sended.");
+        } else {
+          socket.send("Error: Fail to send a confirmation code.");
+        }
+      } else if (action === "code") {
+        const cookies = await submitConfirmationCode(page, message);
+
+        await Deno.writeTextFile("./cookies.json", JSON.stringify(cookies));
+        await closeBrowserAndPage(browser, page);
+        socket.send(JSON.stringify(cookies));
+      } else {
+        socket.send("Error: Invalid action.");
+      }
     };
 
-    const handleClose = async () => {
-      console.log("Connection is closed.");
+    const handleClose = async (browser: Browser, page: Page) => {
       await closeBrowserAndPage(browser, page);
+      socket.send("Info: Connection is closed.");
     };
 
     const socket = ctx.upgrade();
-    const { browser, page } = await openBrowserAndPage();
 
     socket.onopen = handleOpen;
     socket.onerror = (event) => handleError(event);
     socket.onmessage = (event: MessageEvent<string>) => handleMessage(event);
-    socket.onclose = handleClose;
 
-    await accessCalendar(page);
-    await submitUserId(page, userId);
+    const { browser, page } = await openBrowserAndPage();
+    socket.onclose = () => handleClose(browser, page);
   },
 };

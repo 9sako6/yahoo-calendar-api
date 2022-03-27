@@ -14,16 +14,19 @@ export const submitUserId = async (
 
   // Click the "次へ" button and wait for rendering.
   const [submitUserIdButton] = await page.$x('//button[contains(., "次へ")]');
-  await Promise.all([
-    page.waitForNavigation(),
-    submitUserIdButton.click(),
-  ]);
+  // await Promise.all([
+  //   page.waitForNavigation(),
+  //   submitUserIdButton.click(),
+  // ]);
 
+  await submitUserIdButton.click();
   if (Deno.env.get("SCREENSHOT")) {
     await page.screenshot({
       path: "./screenshots/after-click-userid-submit-button.png",
     });
   }
-  const cookies = await page.cookies();
-  return cookies;
+
+  const codeInput = await page.$('input[placeholder="確認コード"]');
+
+  return !!codeInput;
 };
