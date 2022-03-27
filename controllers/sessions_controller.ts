@@ -64,7 +64,7 @@ export const sessionsController = {
 
     const handleClose = async (browser: Browser, page: Page) => {
       await closeBrowserAndPage(browser, page);
-      socket.send("Info: Connection is closed.");
+      socket.close();
     };
 
     const socket = ctx.upgrade();
