@@ -24,6 +24,7 @@ export const sessionsController = {
 
     const handleMessage = async (
       event: MessageEvent<string>,
+      page: Page,
     ) => {
       // NOTE: `event.data` is expected the following two patterns.
       // {"action": "userid", "message": "<your_user_id>"}
@@ -66,14 +67,14 @@ export const sessionsController = {
       await closeBrowserAndPage(browser, page);
       socket.close();
     };
+    const { browser, page } = await openBrowserAndPage();
 
     const socket = ctx.upgrade();
 
     socket.onopen = handleOpen;
     socket.onerror = (event) => handleError(event);
-    socket.onmessage = (event: MessageEvent<string>) => handleMessage(event);
-
-    const { browser, page } = await openBrowserAndPage();
+    socket.onmessage = (event: MessageEvent<string>) =>
+      handleMessage(event, page);
     socket.onclose = () => handleClose(browser, page);
   },
 };
