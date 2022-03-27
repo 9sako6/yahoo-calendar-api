@@ -3,6 +3,8 @@ import { assertEquals } from "../test_deps.ts";
 import { sessionsController } from "./sessions_controller.ts";
 import { closeServer, setupServer } from "./test_helper.ts";
 
+// NOTE: To avoid the error `WebSocket protocol error: Connection reset without closing handshake`,
+// tests in one function.
 Deno.test({
   name: "new $connect",
   fn: async () => {
@@ -25,59 +27,39 @@ Deno.test({
       messages.push(event.data);
     };
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    // Test to connect WebSocket connection.
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    assertEquals(messages[0], "Info: Connection is established.");
+    assertEquals(messages.pop(), "Info: Connection is established.");
 
-    socket.close();
-    closeServer(abortController);
-  },
-  sanitizeOps: false, // FIXME: resolve resoruce leak
-  sanitizeResources: false, // FIXME: resolve resoruce leak
-});
+    // Test invalid action.
+    socket.send(JSON.stringify({
+      action: "foo",
+      message: "bar",
+    }));
 
-Deno.test({
-  name: "new $message with userid action",
-  fn: async () => {
-    const port = 8082;
-    const abortController = new AbortController();
-    const router = new Router();
-    router.get("/", sessionsController.new);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    setupServer(port, abortController, router);
+    assertEquals(messages.pop(), "Error: Invalid action.");
 
-    const socket = new WebSocket(`ws://localhost:${port}/`);
-    const messages: string[] = [];
-
-    socket.onerror = (event) => {
-      if (event instanceof ErrorEvent) {
-        console.error(event.message);
-      }
-    };
-    socket.onmessage = (event: MessageEvent<string>) => {
-      messages.push(event.data);
-    };
-
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    assertEquals(messages[0], "Info: Connection is established.");
-
+    // Test userid action with invalid message.
     socket.send(JSON.stringify({
       action: "userid",
     }));
 
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    assertEquals(messages[1], "Error: An empty message is invalid.");
+    assertEquals(messages.pop(), "Error: An empty message is invalid.");
 
+    // Test userid action with valid message.
     socket.send(JSON.stringify({
       action: "userid",
       message: "calendar_api_test",
     }));
 
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    assertEquals(messages[2], "Info: A confirmation code was sended.");
+    assertEquals(messages.pop(), "Info: A confirmation code was sended.");
 
     socket.close();
     closeServer(abortController);
