@@ -1,5 +1,7 @@
 import { Application } from "./deps.ts";
 import { router } from "./router.ts";
+import { oakCors } from './deps.ts';
+
 const port = 8080;
 const app = new Application();
 
@@ -8,5 +10,6 @@ app.addEventListener("listen", () => {
 });
 
 app.use(router.routes());
+app.use(oakCors())
 
 await app.listen({ port });
