@@ -44,6 +44,7 @@ export const calendarsController = {
 
     await closeBrowserAndPage(browser, page);
 
+    ctx.response.headers.set("Access-Control-Allow-Origin", "*");
     ctx.response.body = events;
   },
 };
