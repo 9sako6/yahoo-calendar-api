@@ -11,7 +11,12 @@ import { Browser, Page } from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
 export const sessionsController = {
   new: async (ctx: Context) => {
     const handleOpen = () => {
-      socket.send("Info: Connection is established.");
+      socket.send(
+        JSON.stringify({
+          type: "message",
+          message: "Info: Connection is established.",
+        }),
+      );
     };
 
     const handleError = async (event: Event | ErrorEvent) => {
@@ -29,17 +34,27 @@ export const sessionsController = {
       // NOTE: `event.data` is expected the following two patterns.
       // {"action": "userid", "message": "<your_user_id>"}
       // {"action": "code", "message": "<confirmation_code>"}
+
+      // Response structure.
+      // {"type": "error" | "message" | "cookies", "message": string}
       try {
         JSON.parse(event.data);
       } catch (e) {
-        socket.send(`Error: ${e.message}`);
+        socket.send(
+          JSON.stringify({ type: "error", message: `Error: ${e.message}` }),
+        );
         return;
       }
 
       const { action, message } = JSON.parse(event.data);
 
       if (!message) {
-        socket.send("Error: An empty message is invalid.");
+        socket.send(
+          JSON.stringify({
+            type: "error",
+            message: "Error: An empty message is invalid.",
+          }),
+        );
         return;
       }
 
@@ -48,18 +63,30 @@ export const sessionsController = {
         const success = await submitUserId(page, message);
 
         if (success) {
-          socket.send("Info: A confirmation code was sended.");
+          socket.send(
+            JSON.stringify({
+              type: "message",
+              message: "Info: A confirmation code was sended.",
+            }),
+          );
         } else {
-          socket.send("Error: Fail to send a confirmation code.");
+          socket.send(
+            JSON.stringify({
+              type: "error",
+              message: "Error: Fail to send a confirmation code.",
+            }),
+          );
         }
       } else if (action === "code") {
         const cookies = await submitConfirmationCode(page, message);
 
         await Deno.writeTextFile("./cookies.json", JSON.stringify(cookies));
         await closeBrowserAndPage(browser, page);
-        socket.send(JSON.stringify(cookies));
+        socket.send(JSON.stringify({ type: "cookies", message: cookies }));
       } else {
-        socket.send("Error: Invalid action.");
+        socket.send(
+          JSON.stringify({ type: "error", message: "Error: Invalid action." }),
+        );
       }
     };
 

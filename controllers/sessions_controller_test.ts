@@ -30,7 +30,13 @@ Deno.test({
     // Test to connect WebSocket connection.
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    assertEquals(messages.pop(), "Info: Connection is established.");
+    assertEquals(
+      messages.pop(),
+      JSON.stringify({
+        type: "message",
+        message: "Info: Connection is established.",
+      }),
+    );
 
     // Test invalid action.
     socket.send(JSON.stringify({
@@ -40,7 +46,10 @@ Deno.test({
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    assertEquals(messages.pop(), "Error: Invalid action.");
+    assertEquals(
+      messages.pop(),
+      JSON.stringify({ type: "error", message: "Error: Invalid action." }),
+    );
 
     // Test userid action with invalid message.
     socket.send(JSON.stringify({
@@ -49,7 +58,13 @@ Deno.test({
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    assertEquals(messages.pop(), "Error: An empty message is invalid.");
+    assertEquals(
+      messages.pop(),
+      JSON.stringify({
+        type: "error",
+        message: "Error: An empty message is invalid.",
+      }),
+    );
 
     // FIXME: The following is failed in CI.
     // // Test userid action with valid message.
