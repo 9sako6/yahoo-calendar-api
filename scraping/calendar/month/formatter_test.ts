@@ -81,8 +81,20 @@ Deno.test("events in month formatter", () => {
     year: 2022,
     month: 3,
     items: [
+      { date: "2022-3-1", events: [] },
+      { date: "2022-3-2", events: [] },
+      { date: "2022-3-3", events: [] },
+      { date: "2022-3-4", events: [] },
+      { date: "2022-3-5", events: [] },
+      { date: "2022-3-6", events: [] },
+      { date: "2022-3-7", events: [] },
+      { date: "2022-3-8", events: [] },
+      { date: "2022-3-9", events: [] },
+      { date: "2022-3-10", events: [] },
+      { date: "2022-3-11", events: [] },
+      { date: "2022-3-12", events: [] },
       {
-        date: "3/13 (日)",
+        date: "2022-3-13",
         events: [
           {
             date: "19:00 〜 19:30通知",
@@ -92,12 +104,18 @@ Deno.test("events in month formatter", () => {
           },
         ],
       },
+      { date: "2022-3-14", events: [] },
+      { date: "2022-3-15", events: [] },
+      { date: "2022-3-16", events: [] },
+      { date: "2022-3-17", events: [] },
+      { date: "2022-3-18", events: [] },
+      { date: "2022-3-19", events: [] },
       {
-        date: "3/20 (日)",
+        date: "2022-3-20",
         events: [{ date: "終日通知", title: " 予定1", place: "", calendar: "カレンダー" }],
       },
       {
-        date: "3/21 (月)",
+        date: "2022-3-21",
         events: [
           {
             date: "終日通知",
@@ -155,6 +173,16 @@ Deno.test("events in month formatter", () => {
           },
         ],
       },
+      { date: "2022-3-22", events: [] },
+      { date: "2022-3-23", events: [] },
+      { date: "2022-3-24", events: [] },
+      { date: "2022-3-25", events: [] },
+      { date: "2022-3-26", events: [] },
+      { date: "2022-3-27", events: [] },
+      { date: "2022-3-28", events: [] },
+      { date: "2022-3-29", events: [] },
+      { date: "2022-3-30", events: [] },
+      { date: "2022-3-31", events: [] },
     ],
   };
 
