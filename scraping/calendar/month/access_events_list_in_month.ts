@@ -1,4 +1,4 @@
-import { Page } from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
+import { Page } from "puppeteer";
 import { beginningOfMonth } from "./beginning_of_month.ts";
 
 export const accessEventsListInMonth = async (

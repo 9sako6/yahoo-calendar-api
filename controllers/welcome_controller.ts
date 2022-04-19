@@ -1,4 +1,4 @@
-import { Context } from "../deps.ts";
+import { Context } from "oak";
 
 export const welcomeController = {
   index: (ctx: Context) => {

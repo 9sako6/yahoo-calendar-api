@@ -1,5 +1,5 @@
 import { closeServer, setupServer } from "./test_helper.ts";
-import { Router } from "../deps.ts";
+import { Router } from "oak";
 import { calendarsController } from "./calendars_controller.ts";
 import { assertEquals } from "../test_deps.ts";
 

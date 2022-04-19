@@ -1,4 +1,4 @@
-import { Context, Status } from "../deps.ts";
+import { Context, Status } from "oak";
 import {
   accessCalendar,
   accessEventsListInMonth,

@@ -1,5 +1,5 @@
 import { assert } from "../test_deps.ts";
-import puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
+import puppeteer from "puppeteer";
 import { closeBrowserAndPage } from "./close_browser_and_page.ts";
 
 Deno.test("close browser and page", async () => {

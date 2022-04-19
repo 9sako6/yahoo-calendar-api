@@ -1,4 +1,4 @@
-import { Browser, Page } from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
+import { Browser, Page } from "puppeteer";
 
 export const closeBrowserAndPage = async (
   browser: Browser,

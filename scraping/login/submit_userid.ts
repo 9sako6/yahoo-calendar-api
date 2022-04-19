@@ -1,4 +1,4 @@
-import { Page } from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
+import { Page } from "puppeteer";
 
 export const submitUserId = async (
   page: Page,

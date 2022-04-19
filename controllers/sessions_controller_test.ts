@@ -1,4 +1,4 @@
-import { Router } from "../deps.ts";
+import { Router } from "oak";
 import { assertEquals } from "../test_deps.ts";
 import { sessionsController } from "./sessions_controller.ts";
 import { closeServer, setupServer } from "./test_helper.ts";

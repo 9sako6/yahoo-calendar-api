@@ -1,4 +1,4 @@
-import { Context } from "../deps.ts";
+import { Context } from "oak";
 import {
   accessCalendar,
   closeBrowserAndPage,
@@ -6,7 +6,7 @@ import {
   submitConfirmationCode,
   submitUserId,
 } from "../scraping/mod.ts";
-import { Browser, Page } from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
+import { Browser, Page } from "puppeteer";
 
 export const sessionsController = {
   new: async (ctx: Context) => {

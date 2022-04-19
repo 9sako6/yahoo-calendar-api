@@ -1,4 +1,4 @@
-import { Application } from "./deps.ts";
+import { Application } from "oak";
 import { router } from "./router.ts";
 import { VERSION } from "./api_version.ts";
 import { assertEquals } from "./test_deps.ts";

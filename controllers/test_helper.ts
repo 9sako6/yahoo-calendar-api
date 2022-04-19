@@ -1,4 +1,4 @@
-import { Application, Router } from "../deps.ts";
+import { Application, Router } from "oak";
 
 export const setupServer = (
   port: number,

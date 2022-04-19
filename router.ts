@@ -1,4 +1,4 @@
-import { Router } from "./deps.ts";
+import { Router } from "oak";
 import { VERSION } from "./api_version.ts";
 import { welcomeController } from "./controllers/welcome_controller.ts";
 import { sessionsController } from "./controllers/sessions_controller.ts";

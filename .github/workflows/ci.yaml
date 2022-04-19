@@ -19,4 +19,4 @@ jobs:
       - name: Check code format
         run: deno fmt --check
       - name: Run test
-        run: docker compose run server deno test -A --unstable
+        run: docker compose run server deno test -A --unstable --import-map=import_map.json
