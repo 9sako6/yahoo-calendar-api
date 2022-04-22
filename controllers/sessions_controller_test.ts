@@ -48,7 +48,10 @@ Deno.test({
 
     assertEquals(
       messages.pop(),
-      JSON.stringify({ type: "error", message: "Error: Invalid action." }),
+      JSON.stringify({
+        type: "error",
+        message: "action property has invalid value.",
+      }),
     );
 
     // Test userid action with invalid message.
@@ -62,7 +65,7 @@ Deno.test({
       messages.pop(),
       JSON.stringify({
         type: "error",
-        message: "Error: An empty message is invalid.",
+        message: "message property is missing.",
       }),
     );
 
