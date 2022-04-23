@@ -10,3 +10,11 @@ services:
     ports:
       - 8080:8080
     command: deno run -A --unstable server.ts
+  doc:
+    container_name: ycal-api-alpha-doc
+    build:
+      context: .
+      dockerfile: openapi/alpha/Dockerfile
+    ports:
+      - 18080:18080
+    command: preview-docs --port=18080 --host=0.0.0.0 openapi.yaml

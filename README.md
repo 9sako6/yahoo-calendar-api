@@ -8,13 +8,8 @@
 
 Run the API server on `localhost:8080`.
 
-    docker compose up
+    docker compose up server
 
-calendar_api_test
+## Documentation
 
-## API Reference
-
-### CalendarList
-
-| HTTP request | Description |
-| ------------ | ----------- |
+    docker compose up doc

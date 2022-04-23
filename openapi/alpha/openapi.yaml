@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Yahoo Calendar API
+  version: alpha
+servers:
+  - url: http://localhost:8080/api/alpha
+    description: local server
+paths:
+  /:
+    get:
+      summary: エンドポイントの情報を返します。
+      responses:
+        "200":
+          description: >
+            エンドポイントの情報が格納された JSON を返します。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Welcome to Yahoo! Calendar API
+  /sessions/new:
+    get:
+      summary: Login
+      responses:
+        "200":
+          description: a
+  /calendars:
+    post:
+      summary: Calendar
+      responses:
+        "200":
+          description: a
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  year:
+                    type: integer
+                    example: 2022
+                  month:
+                    type: integer
+                    minimum: 1
+                    maximum: 12
+                    example: 3
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          example: 3/13 (日)
+                        events:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              date:
+                                type: string
+                              title:
+                                type: string
+                              place:
+                                type: string
+                              calendar:
+                                type: string
