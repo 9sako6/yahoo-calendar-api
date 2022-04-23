@@ -10,6 +10,6 @@ Run the API server on `localhost:8080`.
 
     docker compose up server
 
-## Documentation
+## API Specification
 
-    docker compose up doc
+https://9sako6.github.io/yahoo-calendar-api/
