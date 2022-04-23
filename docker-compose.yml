@@ -18,3 +18,10 @@ services:
     ports:
       - 18080:18080
     command: preview-docs --port=18080 --host=0.0.0.0 openapi.yaml
+  redoc:
+    volumes:
+      - ./doc:/doc
+    build:
+      context: .
+      dockerfile: doc/redoc.dockerfile
+    command: redoc-cli bundle openapi.yaml -o doc/index.html
