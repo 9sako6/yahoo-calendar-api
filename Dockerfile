@@ -1,7 +1,7 @@
 # Ref: https://github.com/lucacasonato/deno-puppeteer/blob/9.0.2/Dockerfile
 FROM debian:buster-slim
 
-ENV DENO_VERSION=1.14.2
+ENV DENO_VERSION=1.20.1
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update \
