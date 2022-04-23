@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Yahoo Calendar API
+  title: Yahoo! Calendar API
   version: alpha
 servers:
   - url: http://localhost:8080/api/alpha

@@ -1,4 +1,4 @@
-# yahoo-calendar-api version alpha
+# Yahoo! Calendar API version alpha
 
 [![CI](https://github.com/9sako6/yahoo-calendar-api/actions/workflows/ci.yaml/badge.svg)](https://github.com/9sako6/yahoo-calendar-api/actions/workflows/ci.yaml)
 
