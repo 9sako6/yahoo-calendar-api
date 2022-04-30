@@ -1,18 +1,31 @@
 import { describe, expect, test } from "vitest";
 import request from "supertest";
-import { app } from "../src/app";
+import { createExpressApplication } from "../src/app";
 
-describe("/", () => {
-  test("It should response the GET method", (done) => {
-    request(app)
-      .get("/api/v0")
-      .then((response) => {
-        expect(response.statusCode).toBe(200);
-        expect(JSON.parse(response.text)).toStrictEqual({
-          message:
-            "Welcome to Yahoo! Calendar API. https://github.com/9sako6/yahoo-calendar-api",
-        });
-        done();
-      });
+describe("Gzip compression", () => {
+  test("Gzip compression is enabled", (done) => {
+    const app = createExpressApplication();
+
+    app.get("/gzip", (_, res) => {
+      res.send("a".repeat(1000));
+    });
+
+    request(app).get("/gzip").then((response) => {
+      expect(response.header["content-encoding"]).toBe("gzip");
+      done();
+    });
+  });
+
+  test("Gzip compression is disabled", (done) => {
+    const app = createExpressApplication();
+
+    app.get("/gzip", (_, res) => {
+      res.send("a".repeat(999));
+    });
+
+    request(app).get("/gzip").then((response) => {
+      expect(response.header["content-encoding"]).toBe(undefined);
+      done();
+    });
   });
 });

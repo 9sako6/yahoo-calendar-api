@@ -3,7 +3,7 @@ import { WebSocketServer } from "ws";
 import { Duplex } from "stream";
 import { chromium } from "@playwright/test";
 import { handleOpen } from "./handle-open";
-import { API_ENDPOINT } from "../app";
+import { API_ENDPOINT } from "../server";
 import { requestLog } from "../utils";
 
 const WEB_SOCKET_PATH = `${API_ENDPOINT}/login`;
