@@ -1,13 +1,20 @@
 import express from "express";
-import { router } from "./router";
-import { API_VERSION } from "./version";
+import compression from "compression";
 
-export const API_ENDPOINT = `/api/${API_VERSION}`;
+export const createExpressApplication = () => {
+  const app = express();
 
-export const app = express();
+  // Use gzip compression.
+  // See https://expressjs.com/en/advanced/best-practice-performance.html#use-gzip-compression
+  app.use(compression({
+    // threshold: It is the byte threshold for the response
+    // body size before considering compression, the default is 1 kB
+    threshold: 1000,
+  }));
 
-// See http://expressjs.com/ja/4x/api.html#req.body
-app.use(express.json()); // for parsing application/json
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+  // See http://expressjs.com/ja/4x/api.html#req.body
+  app.use(express.json()); // for parsing application/json
+  app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.use(API_ENDPOINT, router);
+  return app;
+};
