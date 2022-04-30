@@ -1,4 +1,4 @@
-# Yahoo! Calendar API version alpha
+# Yahoo! Calendar API v0
 
 [![CI](https://github.com/9sako6/yahoo-calendar-api/actions/workflows/ci.yaml/badge.svg)](https://github.com/9sako6/yahoo-calendar-api/actions/workflows/ci.yaml)
 
@@ -8,7 +8,7 @@
 
 Run the API server on `localhost:8080`.
 
-    docker compose up server
+    ts-node src/server.ts
 
 ## API Specification
 

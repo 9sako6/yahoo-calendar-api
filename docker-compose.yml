@@ -1,15 +1,5 @@
 version: "3.9"
 services:
-  server:
-    container_name: ycal-api
-    hostname: ycal-api-server
-    build:
-      dockerfile: Dockerfile
-    volumes:
-      - .:/app
-    ports:
-      - 8080:8080
-    command: deno run -A --unstable --import-map=import_map.json server.ts
   doc:
     container_name: ycal-api-alpha-doc
     build:

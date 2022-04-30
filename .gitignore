@@ -1,5 +1,14 @@
-tmp
-screenshots
-cookies.json
+# Development
+node_modules/
+playwright-report/
 
+# tmp dir or files
+cookies.json
+screenshots
+tmp
+
+# Vitest
+coverage
+
+# For GitHub Pages
 doc/index.html
