@@ -8,7 +8,8 @@
     "clean": "tsc --build --clean",
     "coverage": "vitest run --coverage",
     "test": "vitest run",
-    "testw": "vitest"
+    "testw": "vitest",
+    "type": "tsc --noEmit"
   },
   "author": "9sako6",
   "license": "ISC",
