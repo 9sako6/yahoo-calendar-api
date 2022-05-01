@@ -1,4 +1,4 @@
-import { validationErrors } from "../../../src/websocket/handle-message/validation-errors";
+import { validationErrors } from "./validation-errors";
 import { describe, expect, test } from "vitest";
 
 describe("Validate WebSocket message", () => {

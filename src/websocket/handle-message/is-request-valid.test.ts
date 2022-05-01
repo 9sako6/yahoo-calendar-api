@@ -1,4 +1,4 @@
-import { isRequestValid } from "../../../src/websocket/handle-message/is-request-valid";
+import { isRequestValid } from "./is-request-valid";
 import { describe, expect, test } from "vitest";
 
 describe("", () => {

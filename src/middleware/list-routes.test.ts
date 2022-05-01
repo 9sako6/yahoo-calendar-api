@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { describe, expect, test } from "vitest";
-import { listRoutes } from "../../src/middleware/list-routes";
+import { listRoutes } from "./list-routes";
 
 describe("listRoutes", () => {
   test("List all routes", () => {

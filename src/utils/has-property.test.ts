@@ -1,4 +1,4 @@
-import { hasProperty } from "../../src/utils/has-property";
+import { hasProperty } from "./has-property";
 import { describe, expect, test } from "vitest";
 
 describe("Test hasProperty", () => {
