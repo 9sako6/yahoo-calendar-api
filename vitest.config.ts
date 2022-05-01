@@ -1,7 +1,3 @@
 import { defineConfig } from "vite";
 
-export default defineConfig({
-  test: {
-    "dir": "test",
-  },
-});
+export default defineConfig({});

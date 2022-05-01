@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import request from "supertest";
-import { createExpressApplication } from "../src/app";
+import { createExpressApplication } from "./app";
 
 describe("Gzip compression", () => {
   test("Gzip compression is enabled", (done) => {

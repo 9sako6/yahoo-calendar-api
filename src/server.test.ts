@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import request from "supertest";
-import { app } from "../src/server";
+import { app } from "./server";
 
 describe("GET /", () => {
   test("It should response the GET method", (done) => {
