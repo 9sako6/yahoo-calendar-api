@@ -1,12 +1,16 @@
-import path from "path";
 import { defineConfig } from "vite";
+import { VitePluginNode } from "vite-plugin-node";
 
 export default defineConfig({
-  build: {
-    lib: {
-      entry: path.resolve(__dirname, "src/server.ts"),
-      name: "yahoo-calendar-api",
-      fileName: (format) => `index.${format}.js`,
-    },
+  server: {
+    port: 8080,
   },
+  plugins: [
+    ...VitePluginNode({
+      adapter: "express",
+      appPath: "src/server.ts",
+      tsCompiler: "esbuild",
+      exportName: "viteNodeApp",
+    }),
+  ],
 });

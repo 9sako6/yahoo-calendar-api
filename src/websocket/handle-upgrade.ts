@@ -3,9 +3,8 @@ import { WebSocketServer } from "ws";
 import { Duplex } from "stream";
 import { chromium } from "@playwright/test";
 import { handleOpen } from "./handle-open";
-import { API_ENDPOINT } from "../server";
 
-const WEB_SOCKET_PATH = `${API_ENDPOINT}/login`;
+const WEB_SOCKET_PATH = `/api/v0/login`;
 
 export const handleUpgrade = async (
   request: http.IncomingMessage,
