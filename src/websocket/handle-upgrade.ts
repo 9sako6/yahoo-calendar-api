@@ -4,7 +4,6 @@ import { Duplex } from "stream";
 import { chromium } from "@playwright/test";
 import { handleOpen } from "./handle-open";
 import { API_ENDPOINT } from "../server";
-import { requestLog } from "../utils";
 
 const WEB_SOCKET_PATH = `${API_ENDPOINT}/login`;
 
@@ -13,8 +12,6 @@ export const handleUpgrade = async (
   socket: Duplex,
   head: Buffer,
 ) => {
-  requestLog(request);
-
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
