@@ -4,11 +4,18 @@
 
 ## Overview
 
+This is an API to fetch information from
+[Yahoo! JAPAN カレンダー](https://calendar.yahoo.co.jp/).
+
 ## Usage
 
 Run the API server on `localhost:8080`.
 
-    ts-node src/server.ts
+    # development
+    npm run dev
+
+    # production
+    docker compose up server
 
 ## API Specification
 
