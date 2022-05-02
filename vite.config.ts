@@ -13,4 +13,9 @@ export default defineConfig({
       exportName: "viteNodeApp",
     }),
   ],
+  resolve: {
+    alias: {
+      "~/": `${__dirname}/src/`,
+    },
+  },
 });

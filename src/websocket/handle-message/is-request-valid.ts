@@ -1,5 +1,5 @@
-import { WebSocketRequestMessage } from "../../types";
-import { hasProperty } from "../../utils";
+import { WebSocketRequestMessage } from "~/types";
+import { hasProperty } from "~/utils";
 
 /**
  * Expect the following two patterns.
