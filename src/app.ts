@@ -1,5 +1,6 @@
 import express from "express";
 import compression from "compression";
+import { handleAccessLog } from "./logger";
 
 export const createExpressApplication = () => {
   const app = express();
@@ -11,6 +12,8 @@ export const createExpressApplication = () => {
     // body size before considering compression, the default is 1 kB
     threshold: 1000,
   }));
+
+  app.use(handleAccessLog);
 
   // See http://expressjs.com/ja/4x/api.html#req.body
   app.use(express.json()); // for parsing application/json
