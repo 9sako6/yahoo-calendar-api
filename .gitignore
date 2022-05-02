@@ -8,9 +8,6 @@ cookies.json
 screenshots
 tmp
 
-# For production
-dist
-
 # Vitest
 coverage
 
