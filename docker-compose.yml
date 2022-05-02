@@ -1,5 +1,15 @@
 version: "3.9"
 services:
+  server:
+    container_name: ycal-api-v0-production-server
+    build:
+      context: .
+      dockerfile: production.dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - NODE_ENV=production
+      - SCREENSHOT=true
   doc:
     container_name: ycal-api-v0-doc
     build:
