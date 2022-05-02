@@ -1,8 +1,8 @@
-import { submitUserId } from "../../scraping";
+import { submitUserId } from "~/scraping";
 import { Page } from "@playwright/test";
 import { WebSocket } from "ws";
-import { YAHOO_LOGIN_URL } from "../../scraping";
-import { WebSocketResponseMessage } from "../../types";
+import { YAHOO_LOGIN_URL } from "~/scraping";
+import { WebSocketResponseMessage } from "~/types";
 
 export const handleUserId = async (
   ws: WebSocket,

@@ -1,6 +1,6 @@
 import { Browser, BrowserContext, Page } from "@playwright/test";
 import { WebSocket } from "ws";
-import { WebSocketResponseMessage } from "../types";
+import { WebSocketResponseMessage } from "~/types";
 import { handleMessage } from "./handle-message";
 import { handleClose } from "./handle-close";
 import { handleError } from "./handle-error";

@@ -111,6 +111,24 @@ const submitConfirmationCode = async (context, page, code) => {
   await Debug.saveScreenshot(page, "submit-confirmation-code:after-code-submit.png");
   return await context.cookies();
 };
+const downloadFile = async ({ page, downloaderSelector, downloadPath }) => {
+  const [download] = await Promise.all([
+    page.waitForEvent("download"),
+    page.locator(downloaderSelector).click()
+  ]);
+  await download.saveAs(downloadPath);
+};
+const exportIcs = async (page, year, downloadPath) => {
+  await page.goto("https://calendar.yahoo.co.jp/event/export");
+  await Debug.saveScreenshot(page, "ics:after-page-access.png");
+  await page.type('input[placeholder="\u5E74\u3092\u5165\u529B"]', year);
+  await Debug.saveScreenshot(page, "ics:after-year-input.png");
+  await downloadFile({
+    page,
+    downloaderSelector: 'xpath=//button[contains(., "\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9")]',
+    downloadPath
+  });
+};
 const YAHOO_LOGIN_URL = "https://calendar.yahoo.co.jp/";
 const handleUserId = async (ws2, page, userId) => {
   await page.goto(YAHOO_LOGIN_URL);
@@ -208,24 +226,6 @@ const handleUpgrade = async (request, socket, head) => {
 const root = (_, res) => {
   res.json({
     message: "Welcome to Yahoo! Calendar API. https://github.com/9sako6/yahoo-calendar-api"
-  });
-};
-const downloadFile = async ({ page, downloaderSelector, downloadPath }) => {
-  const [download] = await Promise.all([
-    page.waitForEvent("download"),
-    page.locator(downloaderSelector).click()
-  ]);
-  await download.saveAs(downloadPath);
-};
-const exportIcs = async (page, year, downloadPath) => {
-  await page.goto("https://calendar.yahoo.co.jp/event/export");
-  await Debug.saveScreenshot(page, "ics:after-page-access.png");
-  await page.type('input[placeholder="\u5E74\u3092\u5165\u529B"]', year);
-  await Debug.saveScreenshot(page, "ics:after-year-input.png");
-  await downloadFile({
-    page,
-    downloaderSelector: 'xpath=//button[contains(., "\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9")]',
-    downloadPath
   });
 };
 const exportEvents = async (req, res) => {

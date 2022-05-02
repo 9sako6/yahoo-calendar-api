@@ -1,6 +1,6 @@
 import fs from "fs";
 import { chromium, Cookie } from "@playwright/test";
-import { exportIcs } from "../../scraping/export/export-ics";
+import { exportIcs } from "~/scraping";
 import { Request, Response } from "express";
 
 export const exportEvents = async (req: Request, res: Response) => {

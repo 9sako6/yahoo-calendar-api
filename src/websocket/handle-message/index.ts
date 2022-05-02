@@ -1,4 +1,4 @@
-import { WebSocketResponseMessage } from "../../types";
+import { WebSocketResponseMessage } from "~/types";
 import { Browser, BrowserContext, Page } from "@playwright/test";
 import { RawData, WebSocket } from "ws";
 import { isRequestValid } from "./is-request-valid";

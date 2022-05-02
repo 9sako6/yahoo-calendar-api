@@ -1,7 +1,7 @@
-import { submitConfirmationCode } from "../../scraping";
+import { submitConfirmationCode } from "~/scraping";
 import { Browser, BrowserContext, Page } from "@playwright/test";
 import { WebSocket } from "ws";
-import { WebSocketResponseMessage } from "../../types";
+import { WebSocketResponseMessage } from "~/types";
 
 export const handleConfirmationCode = async (
   ws: WebSocket,
