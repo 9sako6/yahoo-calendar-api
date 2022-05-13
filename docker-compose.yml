@@ -17,10 +17,10 @@ services:
       dockerfile: openapi/v0/Dockerfile
     ports:
       - 18080:18080
+    volumes:
+      - ./openapi/v0:/spec
     command: preview-docs --port=18080 --host=0.0.0.0 openapi.yaml
   redoc:
-    volumes:
-      - ./doc:/doc
     build:
       context: .
       dockerfile: doc/redoc.dockerfile
