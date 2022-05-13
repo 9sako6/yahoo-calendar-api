@@ -24,4 +24,6 @@ services:
     build:
       context: .
       dockerfile: doc/redoc.dockerfile
-    command: redoc-cli bundle openapi.yaml -o doc/index.html
+    volumes:
+      - .:/redoc
+    command: redoc-cli build openapi/v0/openapi.yaml -o doc/index.html
