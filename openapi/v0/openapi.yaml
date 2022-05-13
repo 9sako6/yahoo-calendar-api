@@ -21,12 +21,83 @@ paths:
                   message:
                     type: string
                     example: Welcome to Yahoo! Calendar API
-  /sessions/new:
+  /login:
     get:
       summary: Login to Yahoo!
+      description: >
+        # 概要
+
+        Yahoo! に SMS 認証またはメール認証でログインするためのパスです。
+        ログインするための手順を説明します。
+
+        # 接続方法
+
+        Yahoo! Calendar API と クライアントを WebSocket でつなぎます。
+        `ws://localhost:8080/api/v0/login` でコネクションを確立してください。
+
+        以下は [wscat](https://github.com/websockets/wscat) を使った例です。
+
+
+            $ wscat -c 'ws://localhost:8080/api/v0/login'
+            Connected (press CTRL+C to quit)
+            < {"type":"message","message":"Info: Connection is established."}
+            > 
+
+        # ユーザー ID または電話番号またはメールアドレスの送信
+
+        Yahoo! にログインするユーザー ID または電話番号またはメールアドレスを WebSocket でサーバーに送信します。
+        ユーザー ID または電話番号またはメールアドレスを送信するためには、次の説明にあるような JSON を送信してください。
+
+
+        JSON は `{"action":"userid", "message":"<your_user_id>"}` のようになります。
+
+        - action
+          - 値には `userid` を指定します。
+        - message
+          - 値にはログインするユーザー ID または電話番号またはメールアドレスを指定します。
+
+        wscat を使うと次のようになります。
+
+            $ wscat -c 'ws://localhost:8080/api/v0/login'
+            Connected (press CTRL+C to quit)
+            < {"type":"message","message":"Info: Connection is established."}
+            > {"action":"userid", "message":"<your_user_id>"}
+            < {"type":"message","message":"A confirmation code was sended."}
+
+        サーバーから `{"type":"message","message":"A confirmation code was sended."}` というメッセージが送信された場合、
+        Yahoo! アカウントに登録された電話番号またはメールアドレスに確認コードが届きます。
+
+        # 確認コードの送信
+
+        Yahoo! にログインするために確認コードを WebSocket でサーバーに送信します。
+        次の説明にあるような JSON を送信してください。
+
+        JSON は `{"action":"code", "message":"123456"}` のようになります。
+
+        - action
+          - 値には `code` を指定します。
+        - message
+          - 値には確認コードを指定します。
+
+        wscat を使うと次のようになります。
+
+            $ wscat -c 'ws://localhost:8080/api/v0/login'
+            Connected (press CTRL+C to quit)
+            < {"type":"message","message":"Info: Connection is established."}
+            > {"action":"userid", "message":"<your_user_id>"}
+            < {"type":"message","message":"A confirmation code was sended."}
+            > {"action":"code", "message":"123456"}
+            < {"type":"cookies","message": ...}
+
+        ログインに成功すると、サーバーから `{"type":"cookies","message": ...}` といったメッセージが送信されてきます。
+        `message` の値は Yahoo! サービスにログインできるクッキーです。
+        クッキーは、全ての Yahoo! サービスにログインできるものです。取り扱いに注意した上で、安全な場所に保管してください。
+        Yahoo! Calendar API で情報を取得する際に必要です。
+
       responses:
-        "200":
-          description: Yahoo! に SMS 認証またはメール認証でログインするためのパスです。Yahoo! Calendar API と クライアントを WebSocket でつなぎます。
+        "101":
+          description: >
+            Connect to Yahoo! Calendar API with WebSocket
   /events/export:
     get:
       summary: Export iCalendar
