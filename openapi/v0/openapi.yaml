@@ -8,11 +8,11 @@ servers:
 paths:
   /:
     get:
-      summary: エンドポイントの情報を返します。
+      summary: API Information
       responses:
         "200":
           description: >
-            エンドポイントの情報が格納された JSON を返します。
+            エンドポイントの情報を返します。
           content:
             application/json:
               schema:
@@ -23,47 +23,13 @@ paths:
                     example: Welcome to Yahoo! Calendar API
   /sessions/new:
     get:
-      summary: Login
+      summary: Login to Yahoo!
       responses:
         "200":
-          description: a
-  /calendars:
-    post:
-      summary: Calendar
+          description: Yahoo! に SMS 認証またはメール認証でログインするためのパスです。Yahoo! Calendar API と クライアントを WebSocket でつなぎます。
+  /events/export:
+    get:
+      summary: Export iCalendar
       responses:
         "200":
-          description: a
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  year:
-                    type: integer
-                    example: 2022
-                  month:
-                    type: integer
-                    minimum: 1
-                    maximum: 12
-                    example: 3
-                  items:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        date:
-                          type: string
-                          example: 3/13 (日)
-                        events:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              date:
-                                type: string
-                              title:
-                                type: string
-                              place:
-                                type: string
-                              calendar:
-                                type: string
+          description: iCalendar 形式の ics ファイルをテキスト形式で返します。
